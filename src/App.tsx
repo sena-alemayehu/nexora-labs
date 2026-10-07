@@ -1,0 +1,64 @@
+import { useRef } from "react";
+import "./App.css";
+
+import Navbar from "./components/Navbar";
+import Home from "./components/Home";
+import About from "./components/About";
+import Services from "./components/Services";
+import Projects from "./components/Projects";
+import Contact from "./components/Contact";
+
+function App() {
+  // Reference to the Contact section
+  const contactRef = useRef<HTMLElement | null>(null);
+
+  // Smoothly scroll to Contact section
+  const scrollToContact = () => {
+    contactRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
+  return (
+    <div className="app">
+
+      {/* ================= NAVBAR ================= */}
+      <Navbar onTalkClick={scrollToContact} />
+
+      {/* ================= MAIN CONTENT ================= */}
+      <main>
+
+        {/* HOME / HERO */}
+        <Home onTalkClick={scrollToContact} />
+
+        {/* ABOUT */}
+        <About />
+
+        {/* SERVICES */}
+        <Services />
+
+        {/* PROJECTS */}
+        <Projects />
+
+        {/* CONTACT */}
+        <Contact contactRef={contactRef} />
+
+      </main>
+
+      {/* ================= COPYRIGHT ================= */}
+      <footer className="footer">
+        <p>
+          © 2026 Nexora Labs. All rights reserved.
+        </p>
+
+        <p className="footer-tagline">
+          Innovation Accelerated.
+        </p>
+      </footer>
+
+    </div>
+  );
+}
+
+export default App;
