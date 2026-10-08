@@ -1,6 +1,10 @@
-import { useState } from "react";
 
-function Navbar() {
+interface NavbarProps {
+  onTalkClick: () => void;
+}
+
+import { useState } from "react";
+function Navbar({ onTalkClick }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const closeMenu = () => {
@@ -40,12 +44,16 @@ function Navbar() {
           </button>
 
           {/* TALK BUTTON */}
-          <a
-            href="#contact"
-            className="talk-button"
-          >
-            Let's Talk
-          </a>
+<a
+  href="#contact"
+  className="primary-button"
+  onClick={(e) => {
+    e.preventDefault();
+    onTalkClick();
+  }}
+>
+  Let's Talk →
+</a>
 
           {/* MOBILE MENU BUTTON */}
           <button

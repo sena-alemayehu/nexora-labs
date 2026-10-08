@@ -33,8 +33,7 @@ function App() {
         <Home onTalkClick={scrollToContact} />
 
         {/* ABOUT */}
-        <About />
-
+<About onTalkClick={scrollToContact} />
         {/* SERVICES */}
         <Services />
 

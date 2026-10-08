@@ -1,9 +1,17 @@
-function About() {
+interface AboutProps {
+  onTalkClick: () => void;
+}
+
+function About({ onTalkClick }: AboutProps) {
   return (
     <section id="about" className="about">
 
-      {/* SECTION HEADER */}
+      {/* ================================
+          SECTION HEADER
+      ================================= */}
+
       <div className="section-header">
+
         <p className="section-label">
           ABOUT NEXORA
         </p>
@@ -19,9 +27,14 @@ function About() {
           modern digital products, applications, and
           innovative technology solutions.
         </p>
+
       </div>
 
-      {/* ABOUT CONTENT */}
+
+      {/* ================================
+          ABOUT CONTENT
+      ================================= */}
+
       <div className="about-content">
 
         <div className="about-text">
@@ -43,9 +56,26 @@ function About() {
             solutions that are simple, useful, and scalable.
           </p>
 
+
+          {/* ================================
+              CONTACT BUTTON
+          ================================= */}
+
+          <button
+            type="button"
+            className="primary-button"
+            onClick={onTalkClick}
+          >
+            Let's Talk →
+          </button>
+
         </div>
 
-        {/* STATS */}
+
+        {/* ================================
+            STATS
+        ================================= */}
+
         <div className="about-stats">
 
           <div className="about-stat">

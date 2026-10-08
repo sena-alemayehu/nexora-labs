@@ -1,6 +1,12 @@
-function Contact() {
+import type { RefObject } from "react";
+
+interface ContactProps {
+  contactRef: RefObject<HTMLElement | null>;
+}
+
+function Contact({ contactRef }: ContactProps) {
   return (
-    <section id="contact" className="contact">
+    <section ref={contactRef} id="contact" className="contact">
 
       <div className="contact-content">
 
@@ -37,5 +43,3 @@ function Contact() {
 }
 
 export default Contact;
-
-

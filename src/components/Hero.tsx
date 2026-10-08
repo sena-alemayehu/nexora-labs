@@ -1,4 +1,8 @@
-function Hero() {
+interface HeroProps {
+  onTalkClick: () => void;
+}
+
+function Hero({ onTalkClick }: HeroProps) {
   return (
     <section id="home" className="hero">
 
@@ -43,7 +47,7 @@ function Hero() {
       <div className="hero-content">
 
         <h1>
-          Build Smarter.
+          Build Better.
           <br />
           Create What's
           <br />
@@ -74,6 +78,10 @@ function Hero() {
           <a
             href="#contact"
             className="secondary-button"
+            onClick={(e) => {
+              e.preventDefault();
+              onTalkClick();
+            }}
           >
             Get Started
           </a>

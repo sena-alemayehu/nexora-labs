@@ -1,7 +1,11 @@
 import Hero from "./Hero";
 
-function Home() {
-  return <Hero />;
+interface HomeProps {
+  onTalkClick: () => void;
+}
+
+function Home({ onTalkClick }: HomeProps) {
+  return <Hero onTalkClick={onTalkClick} />;
 }
 
 export default Home;

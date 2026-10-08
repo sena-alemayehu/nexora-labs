@@ -111,7 +111,7 @@ main {
    LOGO
 ========================================================= */
 
-..logo {
+.logo {
   display: flex;
   align-items: center;
   width: 155px;
