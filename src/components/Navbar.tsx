@@ -1,27 +1,46 @@
+import { useState } from "react";
 
 interface NavbarProps {
   onTalkClick: () => void;
+  darkMode: boolean;
+  toggleTheme: () => void;
 }
 
-import { useState } from "react";
-function Navbar({ onTalkClick }: NavbarProps) {
+function Navbar({
+  onTalkClick,
+  darkMode,
+  toggleTheme,
+}: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Close the mobile menu
   const closeMenu = () => {
     setMenuOpen(false);
+  };
+
+  // Smoothly navigate to Contact
+  const handleTalkClick = (
+    event: React.MouseEvent<HTMLAnchorElement>
+  ) => {
+    event.preventDefault();
+    closeMenu();
+    onTalkClick();
   };
 
   return (
     <header className="navbar">
       <div className="nav-container">
-
         {/* LOGO */}
-      <a href="#home" className="logo" onClick={closeMenu}>
-  <img
-    src="/nexora-logo.png"
-    alt="Nexora Labs"
-  />
-</a>
+        <a
+          href="#home"
+          className="logo"
+          onClick={closeMenu}
+        >
+          <img
+            src="/nexora-logo.png"
+            alt="Nexora Labs"
+          />
+        </a>
 
         {/* DESKTOP NAVIGATION */}
         <nav className="nav-links">
@@ -32,40 +51,50 @@ function Navbar({ onTalkClick }: NavbarProps) {
           <a href="#contact">Contact</a>
         </nav>
 
-        {/* RIGHT SIDE */}
+        {/* RIGHT SIDE ACTIONS */}
         <div className="nav-actions">
-
-          {/* THEME BUTTON */}
+          {/* DARK / LIGHT MODE BUTTON */}
           <button
+            type="button"
             className="theme-button"
-            aria-label="Toggle theme"
+            onClick={toggleTheme}
+            aria-label={
+              darkMode
+                ? "Switch to light mode"
+                : "Switch to dark mode"
+            }
+            aria-pressed={!darkMode}
+            title={
+              darkMode
+                ? "Switch to light mode"
+                : "Switch to dark mode"
+            }
           >
-            ☀️
+            {darkMode ? "☀️" : "🌙"}
           </button>
 
-          {/* TALK BUTTON */}
-<a
-  href="#contact"
-  className="primary-button"
-  onClick={(e) => {
-    e.preventDefault();
-    onTalkClick();
-  }}
->
-  Let's Talk →
-</a>
+          {/* LET'S TALK BUTTON */}
+          <a
+            href="#contact"
+            className="primary-button"
+            onClick={handleTalkClick}
+          >
+            Let's Talk →
+          </a>
 
           {/* MOBILE MENU BUTTON */}
           <button
+            type="button"
             className="menu-button"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
+            onClick={() => setMenuOpen((previous) => !previous)}
+            aria-label={
+              menuOpen ? "Close menu" : "Open menu"
+            }
+            aria-expanded={menuOpen}
           >
             {menuOpen ? "×" : "☰"}
           </button>
-
         </div>
-
       </div>
 
       {/* MOBILE MENU */}
@@ -92,11 +121,10 @@ function Navbar({ onTalkClick }: NavbarProps) {
           Projects
         </a>
 
-        <a href="#contact" onClick={closeMenu}>
+        <a href="#contact" onClick={handleTalkClick}>
           Contact
         </a>
       </div>
-
     </header>
   );
 }
