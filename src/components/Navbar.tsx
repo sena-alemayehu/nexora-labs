@@ -1,4 +1,6 @@
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
+import type { MouseEvent } from "react";
 
 interface NavbarProps {
   onTalkClick: () => void;
@@ -6,26 +8,78 @@ interface NavbarProps {
   toggleTheme: () => void;
 }
 
+const navItems = [
+  { id: "home", name: "Home" },
+  { id: "about", name: "About" },
+  { id: "services", name: "Services" },
+  { id: "projects", name: "Projects" },
+  { id: "contact", name: "Contact" },
+];
+
 function Navbar({
   onTalkClick,
   darkMode,
   toggleTheme,
 }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
   // Close the mobile menu
   const closeMenu = () => {
     setMenuOpen(false);
   };
 
-  // Smoothly navigate to Contact
+  // Handle Let's Talk click
   const handleTalkClick = (
-    event: React.MouseEvent<HTMLAnchorElement>
+    event: MouseEvent<HTMLAnchorElement>
   ) => {
     event.preventDefault();
     closeMenu();
     onTalkClick();
   };
+
+  // Track the active section while scrolling
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 150;
+      let currentSection = "home";
+
+      navItems.forEach((item) => {
+        const section = document.getElementById(item.id);
+
+        if (
+          section &&
+          section.offsetTop <= scrollPosition
+        ) {
+          currentSection = item.id;
+        }
+      });
+
+      setActiveSection(currentSection);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  // Close the mobile menu when switching to desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <header className="navbar">
@@ -35,25 +89,40 @@ function Navbar({
           href="#home"
           className="logo"
           onClick={closeMenu}
+          aria-label="Nexora Labs home"
         >
           <img
-            src="/nexora-logo.png"
+            src={
+              darkMode
+                ? "/nexora-logo.png"
+                : "/nexora-logo-light.png"
+            }
             alt="Nexora Labs"
           />
         </a>
 
         {/* DESKTOP NAVIGATION */}
-        <nav className="nav-links">
-          <a href="#home">Home</a>
-          <a href="#about">About</a>
-          <a href="#services">Services</a>
-          <a href="#projects">Projects</a>
-          <a href="#contact">Contact</a>
+        <nav
+          className="nav-links"
+          aria-label="Main navigation"
+        >
+          {navItems.map((item) => (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              className={
+                activeSection === item.id ? "active" : ""
+              }
+              onClick={closeMenu}
+            >
+              {item.name}
+            </a>
+          ))}
         </nav>
 
         {/* RIGHT SIDE ACTIONS */}
         <div className="nav-actions">
-          {/* DARK / LIGHT MODE BUTTON */}
+          {/* DARK / LIGHT MODE */}
           <button
             type="button"
             className="theme-button"
@@ -73,7 +142,7 @@ function Navbar({
             {darkMode ? "☀️" : "🌙"}
           </button>
 
-          {/* LET'S TALK BUTTON */}
+          {/* LET'S TALK */}
           <a
             href="#contact"
             className="primary-button"
@@ -82,49 +151,52 @@ function Navbar({
             Let's Talk →
           </a>
 
-          {/* MOBILE MENU BUTTON */}
+          {/* MOBILE MENU TOGGLE */}
           <button
             type="button"
             className="menu-button"
-            onClick={() => setMenuOpen((previous) => !previous)}
+            onClick={() =>
+              setMenuOpen((previous) => !previous)
+            }
             aria-label={
               menuOpen ? "Close menu" : "Open menu"
             }
             aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
           >
-            {menuOpen ? "×" : "☰"}
+            {menuOpen ? "✕" : "☰"}
           </button>
         </div>
       </div>
 
-      {/* MOBILE MENU */}
-      <div
-        className={
-          menuOpen
-            ? "mobile-menu open"
-            : "mobile-menu"
-        }
+      {/* MOBILE NAVIGATION */}
+      <nav
+        id="mobile-navigation"
+        className={`mobile-menu ${
+          menuOpen ? "open" : ""
+        }`}
+        aria-label="Mobile navigation"
+        aria-hidden={!menuOpen}
+        inert={!menuOpen}
       >
-        <a href="#home" onClick={closeMenu}>
-          Home
-        </a>
-
-        <a href="#about" onClick={closeMenu}>
-          About
-        </a>
-
-        <a href="#services" onClick={closeMenu}>
-          Services
-        </a>
-
-        <a href="#projects" onClick={closeMenu}>
-          Projects
-        </a>
-
-        <a href="#contact" onClick={handleTalkClick}>
-          Contact
-        </a>
-      </div>
+        {navItems.map((item) => (
+          <a
+            key={item.id}
+            href={`#${item.id}`}
+            className={
+              activeSection === item.id ? "active" : ""
+            }
+            onClick={
+              item.id === "contact"
+                ? handleTalkClick
+                : closeMenu
+            }
+            tabIndex={menuOpen ? 0 : -1}
+          >
+            {item.name}
+          </a>
+        ))}
+      </nav>
     </header>
   );
 }

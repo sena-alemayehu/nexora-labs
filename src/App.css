@@ -1442,3 +1442,217 @@ button:focus-visible {
     animation-iteration-count: 1 !important;
   }
 }
+/* =========================
+   CONTACT — LET'S TALK BUTTON
+========================= */
+
+.contact .contact-content > .primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 420px;
+  max-width: 100%;
+  min-height: 150px;
+  padding: 28px 36px;
+  margin-top: 30px;
+
+  background: transparent !important;
+  color: #8ab4f8 !important;
+  border: 2px solid #8ab4f8 !important;
+  border-radius: 55px;
+
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+
+  box-shadow:
+    0 0 8px rgba(138, 180, 248, 0.18),
+    inset 0 0 8px rgba(138, 180, 248, 0.04);
+
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.contact .contact-content > .primary-button:hover {
+  background: rgba(138, 180, 248, 0.08) !important;
+  box-shadow: 0 0 22px rgba(138, 180, 248, 0.22);
+  transform: translateY(-3px);
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .contact .contact-content > .primary-button {
+    width: 65%;
+    max-width: 340px;
+    min-height: 90px;
+    padding: 20px 24px;
+    margin-top: 26px;
+    border-radius: 35px;
+    font-size: 30px;
+  }
+}
+
+/* =========================
+   STATIC / FIXED NAVBAR
+   DARK + LIGHT MODE
+========================= */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+
+  /* Follow the active theme */
+  background: var(--background);
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+/* Dark mode */
+:root[data-theme="dark"] .navbar {
+  background: rgba(11, 15, 25, 0.5);
+  color: #f9fafb;
+  border-bottom-color: #1f2937;
+}
+
+/* Light mode */
+:root[data-theme="light"] .navbar {
+  background: rgba(248, 250, 252, 0.5);
+  color: #111827;
+  border-bottom-color: #e5e7eb;
+  
+}
+
+/* Keep page content below the fixed navbar */
+html {
+  scroll-padding-top: 90px;
+}
+
+body {
+  padding-top: 90px;
+}
+
+/* Prevent anchor sections from hiding under navbar */
+section[id] {
+  scroll-margin-top: 90px;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  body {
+    padding-top: 80px;
+  }
+
+  html {
+    scroll-padding-top: 80px;
+  }
+
+  section[id] {
+    scroll-margin-top: 80px;
+  }
+}
+
+
+/* =========================
+   MOBILE NAVIGATION MENU
+========================= */
+
+.menu-button {
+  display: none;
+}
+
+.mobile-menu {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+
+  .menu-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .mobile-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 198px;
+    padding: 12px 0;
+
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-left: none;
+    border-radius: 0 20px 20px 0;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(-12px);
+
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease,
+      visibility 0.25s ease;
+
+    z-index: 1001;
+  }
+
+  .mobile-menu.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(0);
+  }
+
+  .mobile-menu a {
+    display: block;
+    width: 100%;
+    padding: 15px 16px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  .mobile-menu a.active,
+  .mobile-menu a:hover {
+    color: var(--primary);
+  }
+
+  .mobile-menu a.active {
+    font-weight: 700;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-menu {
+    display: none;
+  }
+}

@@ -12,10 +12,12 @@ function Hero({ onTalkClick }: HeroProps) {
 
       <p className="hero-label">
         INNOVATION
-        <span>•</span>
+        <span>.</span>
         DESIGN
-        <span>•</span>
+        <span>.</span>
         TECHNOLOGY
+        <span>.</span>
+        COMPANY
       </p>
 
 

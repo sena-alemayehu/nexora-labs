@@ -30,12 +30,11 @@ function Contact({ contactRef }: ContactProps) {
 
         {/* CONTACT BUTTON */}
         <a
-          href="mailto:hello@nexora.com"
+          href="mailto:nafyadabe49@gmail.com"
           className="primary-button"
         >
           Let's Talk →
         </a>
-
       </div>
 
     </section>
